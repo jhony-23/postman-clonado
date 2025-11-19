@@ -1,0 +1,43 @@
+<div class="response-viewer">
+  <h2>Response</h2>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Enviando petición...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !loading" class="error-box">
+    <h3>Error</h3>
+    <p>{{ error }}</p>
+  </div>
+
+  <!-- Response Data -->
+  <div *ngIf="response && !loading && !error" class="response-content">
+    <!-- Status y Tiempo -->
+    <div class="response-meta">
+      <div class="meta-item">
+        <span class="meta-label">Status:</span>
+        <span [class]="'status-badge ' + getStatusClass()">
+          {{ response.status }} {{ response.statusText }}
+        </span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Time:</span>
+        <span class="time-badge">{{ response.responseTime.toFixed(0) }} ms</span>
+      </div>
+    </div>
+
+    <!-- Body de respuesta -->
+    <div class="response-body">
+      <h3>Body</h3>
+      <pre class="json-content">{{ formattedBody }}</pre>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!response && !loading && !error" class="empty-state">
+    <p>Aún no hay respuesta. Envía una petición para ver el resultado.</p>
+  </div>
+</div>

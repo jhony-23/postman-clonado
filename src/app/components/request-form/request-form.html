@@ -1,0 +1,57 @@
+<div class="request-form">
+  <h2>HTTP Request</h2>
+  
+  <form (ngSubmit)="onSubmit()">
+    <!-- URL y Método -->
+    <div class="form-row">
+      <select [(ngModel)]="method" name="method" class="method-select">
+        <option *ngFor="let m of methods" [value]="m">{{ m }}</option>
+      </select>
+      
+      <input 
+        type="text" 
+        [(ngModel)]="url" 
+        name="url"
+        placeholder="Ingresa la URL de la API" 
+        class="url-input"
+      />
+      
+      <button type="submit" class="send-btn">Enviar</button>
+    </div>
+
+    <!-- Headers -->
+    <div class="headers-section">
+      <h3>Headers</h3>
+      <div *ngFor="let header of headers; let i = index" class="header-row">
+        <input 
+          type="text" 
+          [(ngModel)]="header.key" 
+          [name]="'headerKey' + i"
+          placeholder="Key"
+          class="header-input"
+        />
+        <input 
+          type="text" 
+          [(ngModel)]="header.value" 
+          [name]="'headerValue' + i"
+          placeholder="Value"
+          class="header-input"
+        />
+        <button type="button" (click)="removeHeader(i)" class="remove-btn">×</button>
+      </div>
+      <button type="button" (click)="addHeader()" class="add-btn">+ Agregar Header</button>
+    </div>
+
+    <!-- Body (solo para POST, PUT, PATCH) -->
+    <div *ngIf="showBody" class="body-section">
+      <h3>Body (JSON)</h3>
+      <textarea 
+        [(ngModel)]="body" 
+        name="body"
+        placeholder='{"key": "value"}'
+        rows="8"
+        class="body-textarea"
+      ></textarea>
+    </div>
+  </form>
+</div>
